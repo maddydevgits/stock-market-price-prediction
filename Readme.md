@@ -3,6 +3,7 @@ Predicting of Stock Market Prices using Deep Learning LSTM Model, Long Short Ter
 
 # Development Procedure
 
-1. Create a Web App and install the basic requirements :x:
+1. Create a Web App and install the basic requirements :heavy_check_mark:
+2. Create a Stock Symbol and pass it to the program :x:
 
 
