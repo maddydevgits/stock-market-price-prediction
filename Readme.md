@@ -4,6 +4,9 @@ Predicting of Stock Market Prices using Deep Learning LSTM Model, Long Short Ter
 # Development Procedure
 
 1. Create a Web App and install the basic requirements :heavy_check_mark:
-2. Create a Stock Symbol and pass it to the program :x:
+2. Create a Stock Symbol and pass it to the program :heavy_check_mark:
+3. Get Live Data from Nifty as per the dates :heavy_check_mark:
+4. Plot the StockPrice Vs Date :heavy_check_mark:
+5. Data Preparation :x:
 
 
