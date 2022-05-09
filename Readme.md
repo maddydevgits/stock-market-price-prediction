@@ -9,6 +9,7 @@ Predicting of Stock Market Prices using Deep Learning LSTM Model, Long Short Ter
 4. Plot the StockPrice Vs Date :heavy_check_mark:
 5. Data Preprocessing :heavy_check_mark:
 6. Preparing the Data for LSTM :heavy_check_mark:
-7. Creating LSTM Model :x:
+7. Creating LSTM Model :heavy_check_mark:
+8. Plotting metrics :x:
 
 

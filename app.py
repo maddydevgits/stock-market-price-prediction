@@ -4,6 +4,27 @@ from nsepy import get_history
 from datetime import datetime
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from tensorflow import keras
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+import time
+
+def compile_model(TimeSteps,TotalFeatures):
+
+    regressor=Sequential()
+    regressor.add(LSTM(units=10,activation='relu',input_shape=(TimeSteps,TotalFeatures),return_sequences=True))
+    regressor.add(LSTM(units=5,activation='relu',input_shape=(TimeSteps,TotalFeatures),return_sequences=True))
+    regressor.add(LSTM(units=5,activation='relu',return_sequences=False))
+    regressor.add(Dense(units=1))
+    regressor.compile(optimizer='adam',loss='mean_squared_error')
+    StartTime=time.time()
+    regressor.fit(X_train,Y_train,batch_size=5,epochs=100)
+    EndTime=time.time()
+    regressor.fit(X_train,Y_train,batch_size=5,epochs=100)
+    EndTime=time.time()
+    st.write("### Total Time Taken: "+str(round((EndTime-StartTime)/60))+'Minutes ##')
+    return regressor
 
 np.set_printoptions(suppress=True)
 st.title('Stock Market Prediction using LSTM')
@@ -70,7 +91,16 @@ if st.button('Get Data'):
     col1.write(X_test.shape)
     col2.write(Y_test.shape)
 
+    TimeSteps=X_train.shape[1]
+    TotalFeatures=X_train.shape[2]
+
+    st.header('Creating LSTM Model')
+    st.write("Number of TimeSteps: " + str(TimeSteps))
+    st.write('Number of Features: ' + str(TotalFeatures))
+    regressor=compile_model(TimeSteps,TotalFeatures)
+
     
+
 
 
 
