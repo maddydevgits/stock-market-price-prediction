@@ -99,7 +99,53 @@ if st.button('Get Data'):
     st.write('Number of Features: ' + str(TotalFeatures))
     regressor=compile_model(TimeSteps,TotalFeatures)
 
-    
+    predicted_price=regressor.predict(X_test)
+    predicted_price=DataScaler.inverse_transform(predicted_price)
+
+    orig=Y_test
+    orig=DataScaler.inverse_transform(Y_test)
+
+    st.header('Visualising the Test Records')
+    st.write('Accuracy: '+ str(100-(100*(abs(orig-predicted_price)/orig)).mean()))
+    fig=plt.figure(figsize=(20,6))
+    plt.plot(predicted_price,color='blue',label='Predicted Volume')
+    plt.plot(orig,color='red',label='Original Volume')
+    plt.title('Stock Price Predictions')
+    plt.xlabel('Trading Date')
+    plt.ylabel('Stock Price')
+    st.pyplot(fig)
+
+    st.header('Visualising for Full Data')
+    fig=plt.figure(figsize=(20,6))
+    TrainPredictions=DataScaler.inverse_transform(regressor.predict(X_train))
+    TestPredictions=DataScaler.inverse_transform(regressor.predict(X_test))
+
+    FullDataPredictions=np.append(TrainPredictions,TestPredictions)
+    FullDataOrig=FullData[TimeSteps:]
+
+    plt.plot(FullDataPredictions,color='blue',label='Predicted Price')
+    plt.plot(FullDataOrig,color='red',label='Original Price')
+    plt.title('Stock Price Predictions')
+    plt.xlabel('Trading Date')
+    plt.ylabel('Stock Price')
+    st.pyplot(plt)
+
+    Last10Days=np.array(StockData['Close'][-10:])
+    Last10DaysPrices=Last10Days.reshape(-1,1)
+    X_test=DataScaler.transform(Last10DaysPrices)
+
+    NumberofSamples=1
+    TimeSteps=X_test.shape[0]
+    NumberofFeatures=X_test.shape[1]
+    X_test=X_test.reshape(NumberofSamples,TimeSteps,NumberofFeatures)
+    Next5DaysPrice=regressor.predict(X_test)
+    Next5DaysPrice=DataScaler.inverse_transform(Next5DaysPrice)
+    st.header('Prediction of Stock Market Price')
+    st.write(Next5DaysPrice)
+
+
+
+
 
 
 
