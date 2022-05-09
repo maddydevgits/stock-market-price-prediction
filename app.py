@@ -3,6 +3,7 @@ import numpy as np
 from nsepy import get_history
 from datetime import datetime
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 np.set_printoptions(suppress=True)
 st.title('Stock Market Prediction using LSTM')
@@ -23,5 +24,16 @@ if st.button('Get Data'):
     plt.xlabel('TradeDate')
     plt.ylabel('Stock Price')
     st.pyplot(fig)
+
+    FullData=StockData[['Close']].values
+    st.header('Before Normalization')
+    st.write(FullData[0:5])
+
+    sc=MinMaxScaler()
+    DataScaler=sc.fit(FullData)
+    X=DataScaler.transform(FullData)
+    st.header('After Normalization')
+    st.write(X[0:5])
+
     
 
