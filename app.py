@@ -1,6 +1,6 @@
 import streamlit as st
 import numpy as np
-from nsepy import get_history
+from nsedt import equity as eq
 from datetime import datetime
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
@@ -35,18 +35,18 @@ endDate=(col2.date_input('Enter End Date'))
 symbol=st.text_input('Enter Stock Symbol')
 
 if st.button('Get Data'):
-    StockData=get_history(symbol=symbol,start=startDate,end=endDate)
+    StockData=eq.get_price(startDate,endDate,symbol=symbol)
     print(StockData.shape)
     print(StockData.columns)
-    StockData['TradeDate']=StockData.index
+    StockData['Date']=StockData.index
     fig=plt.figure(figsize=(20,6))
-    plt.plot(StockData['TradeDate'],StockData['Close'])
+    plt.plot(StockData['Date'],StockData['Close Price'])
     plt.title('Stock Prices Vs Date')
     plt.xlabel('TradeDate')
     plt.ylabel('Stock Price')
     st.pyplot(fig)
 
-    FullData=StockData[['Close']].values
+    FullData=StockData[['Close Price']].values
     st.header('Before Normalization')
     st.write(FullData[0:5])
 
@@ -130,7 +130,7 @@ if st.button('Get Data'):
     plt.ylabel('Stock Price')
     st.pyplot(plt)
 
-    Last10Days=np.array(StockData['Close'][-10:])
+    Last10Days=np.array(StockData['Close Price'][-10:])
     Last10DaysPrices=Last10Days.reshape(-1,1)
     X_test=DataScaler.transform(Last10DaysPrices)
 
